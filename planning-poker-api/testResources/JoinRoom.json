@@ -1,0 +1,5 @@
+{
+  "action": "JoinRoom",
+  "room": 1,
+  "name": "a person"
+}
