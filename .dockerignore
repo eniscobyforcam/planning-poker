@@ -1,0 +1,10 @@
+**/.idea
+**/.vscode
+
+planning-poker-ui/node_modules
+planning-poker-ui/public
+planning-poker-ui/src
+
+planning-poker-api/pkg
+planning-poker-api/testResources
+planning-poker-api/vendor

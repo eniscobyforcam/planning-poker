@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react'
 import useWebSocket, {ReadyState} from 'react-use-websocket'
 
 const getEndpointUrl = () => {
-  if (process.env.REACT_APP_ENDPOINT_URL) {
+  if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_ENDPOINT_URL) {
     return process.env.REACT_APP_ENDPOINT_URL
   }
 

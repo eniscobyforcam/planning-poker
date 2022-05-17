@@ -1,9 +1,9 @@
-all: clean build_api build_ui build_docker
+all: build_api build_ui build_docker
 
 .PHONY: clean_ui clean_api clean docker_up docker_down build_docker
 
 docker_up:
-	docker run -d --name planning-poker -p 8080:80 planning-poker:latest
+	docker run -d --name planning-poker -p 80:80 planning-poker:latest
 
 docker_down:
 	docker rm -f planning-poker
