@@ -17,7 +17,7 @@ const Room = styled(Typography)`
   }
 `
 
-interface HeaderProps {
+interface Props {
   room?: number
   userName?: string
   onNewRound: () => void
@@ -26,7 +26,7 @@ interface HeaderProps {
   readyState: ReadyState
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header: React.FC<Props> = ({
                                          room,
                                          userName,
                                          onNewRound,

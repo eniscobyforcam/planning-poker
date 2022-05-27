@@ -8,12 +8,12 @@ const Background = styled(Grid)`
   margin: ${({theme}) => theme.spacing(1)};
 `
 
-interface CardsProps {
+interface Props {
   currentVote: string
   onVote: (vote: string) => void
 }
 
-const Cards: React.FC<CardsProps> = ({currentVote, onVote}) => {
+const Cards: React.FC<Props> = ({currentVote, onVote}) => {
   return (
     <Background container spacing={1} justifyContent='center'>
       {["0", "0.5", "1", "2", "3", "5", "8", "13", "20", "40", "100", "?", "☕"].map((value) => (

@@ -8,12 +8,12 @@ const Window = styled('div')`
   position: absolute;
 `
 
-interface RoomSelectionProps {
+interface Props {
   onEnterRoom: (no: number) => void
   onCreateRoom: () => void
 }
 
-const RoomSelection: React.FC<RoomSelectionProps> = ({
+const RoomSelection: React.FC<Props> = ({
   onEnterRoom,
   onCreateRoom
 }) => {

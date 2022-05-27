@@ -13,11 +13,11 @@ const StyledTable = styled(Table)`
   margin: ${(props) => props.theme.spacing(1)};
 `
 
-interface RoundProps {
+interface Props {
   votes: Record<string, string>
 }
 
-const Round: React.FC<RoundProps> = ({votes}) => {
+const Round: React.FC<Props> = ({votes}) => {
   const revealed = useMemo(
     () =>
       Object.values(votes).reduce(

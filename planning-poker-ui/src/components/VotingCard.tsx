@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import {styled} from '@mui/system'
 
-interface VotingCardProps {
+interface Props {
   value: string
   currentVote: string
   onVote: (vote: string) => void
@@ -23,7 +23,7 @@ const StyledCard = styled(Card)`
   margin: ${({theme}) => theme.spacing(1)};
 `
 
-const VotingCard: React.FC<VotingCardProps> = ({
+const VotingCard: React.FC<Props> = ({
   value,
   currentVote,
   onVote

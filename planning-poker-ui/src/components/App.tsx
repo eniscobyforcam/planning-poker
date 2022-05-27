@@ -1,12 +1,9 @@
-import {Alert, Snackbar, Stack} from '@mui/material'
-import {styled} from '@mui/system'
-import React, {useState} from 'react'
-import Cards from './Cards'
+import { Alert, Snackbar } from '@mui/material'
+import { styled } from '@mui/system'
+import React, { useState } from 'react'
+import { useRoom } from '../hooks/useRoom'
+import Content from './Content'
 import Header from './Header'
-import RoomSelection from './RoomSelection'
-import Round from './Round'
-import {useRoom} from './useRoom'
-import Welcome from './Welcome'
 
 const Viewport = styled('div')`
   width: 100vw;
@@ -36,30 +33,22 @@ const App: React.FC = () => {
       <Header
         userName={name}
         room={room}
+        readyState={readyState}
         onNewRound={startNewRound}
         onLeaveRoom={leaveRoom}
         onSetUserName={setName}
-        readyState={readyState}
       />
 
-      {!name && <Welcome onSetName={setName} />}
-
-      {name && !room && (
-        <RoomSelection onEnterRoom={joinRoom} onCreateRoom={createRoom} />
-      )}
-
-      {name && room && (
-        <Stack>
-          <Cards
-            currentVote={votes[name]}
-            onVote={(points) => {
-              vote(points)
-            }}
-          />
-          <Round votes={votes} />
-        </Stack>
-      )}
-
+      <Content
+        name={name}
+        room={room}
+        votes={votes}
+        setName={setName}
+        joinRoom={joinRoom}
+        createRoom={createRoom}
+        vote={vote}
+      />
+      
       <Snackbar
         open={currentError !== undefined}
         autoHideDuration={6000}
