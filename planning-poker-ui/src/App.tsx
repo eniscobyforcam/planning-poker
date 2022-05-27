@@ -14,7 +14,9 @@ const Viewport = styled('div')`
 `
 
 const App: React.FC = () => {
-  const [currentError, setCurrentError] = useState(undefined as string | undefined)
+  const [currentError, setCurrentError] = useState(
+    undefined as string | undefined
+  )
 
   const {
     room,
@@ -40,17 +42,14 @@ const App: React.FC = () => {
         readyState={readyState}
       />
 
-      {!name
-        ? <Welcome onSetName={setName} />
-        : undefined}
+      {!name && <Welcome onSetName={setName} />}
 
-      {name && !room
-        ? <RoomSelection onEnterRoom={joinRoom}
-                         onCreateRoom={createRoom} />
-        : undefined}
+      {name && !room && (
+        <RoomSelection onEnterRoom={joinRoom} onCreateRoom={createRoom} />
+      )}
 
-      {name && room
-        ? <Stack>
+      {name && room && (
+        <Stack>
           <Cards
             currentVote={votes[name]}
             onVote={(points) => {
@@ -59,10 +58,13 @@ const App: React.FC = () => {
           />
           <Round votes={votes} />
         </Stack>
-        : undefined}
+      )}
 
-      <Snackbar open={currentError !== undefined} autoHideDuration={6000}
-                onClose={() => setCurrentError(undefined)}>
+      <Snackbar
+        open={currentError !== undefined}
+        autoHideDuration={6000}
+        onClose={() => setCurrentError(undefined)}
+      >
         <Alert onClose={() => setCurrentError(undefined)} severity='error'>
           {currentError}
         </Alert>
