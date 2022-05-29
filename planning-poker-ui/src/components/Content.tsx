@@ -1,29 +1,41 @@
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { useState } from 'react'
 import Room from './Room'
 import RoomSelection from './RoomSelection'
 import Welcome from './Welcome'
 
-interface Props {
-    name: string | undefined
-    room: number | undefined
-    setName: (name: string) => void
-    votes: Record<string, string>
-    joinRoom: (room: number) => void
-    createRoom: () => void
-    vote: (points: string) => void
-}
+const Content: React.FC = () => {
+  const [view, setView] = useState("1")
 
-const Content: React.FC<Props> = ({name, room, votes, setName, joinRoom, createRoom, vote}) => {
+  const handleViewChange = (e: SelectChangeEvent) => {
+    setView(e.target.value)
+  }
+
+  const Switcher = () => {
+    return (
+      <FormControl fullWidth>
+        <Select
+          value={view}
+          label='View'
+          onChange={handleViewChange}
+        >
+          <MenuItem value={"1"}>Welcome</MenuItem>
+          <MenuItem value={"2"}>Room selection</MenuItem>
+          <MenuItem value={"3"}>Room</MenuItem>
+        </Select>
+      </FormControl>
+    )
+  }
+
   return (
     <>
-      {!name && <Welcome onSetName={setName} />}
+      <Switcher />
 
-      {name && !room && (
-        <RoomSelection onEnterRoom={joinRoom} onCreateRoom={createRoom} />
-      )}
+      { view === "1" && <Welcome /> }
 
-      {name && room && (
-        <Room name={name} votes={votes} vote={vote}/>
-      )}
+      { view === "2" && <RoomSelection /> }
+
+      { view === "3" && <Room /> }
     </>
   )
 }

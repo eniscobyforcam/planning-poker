@@ -1,9 +1,5 @@
 import { styled, TextField } from '@mui/material'
-import React, { KeyboardEventHandler, useCallback } from 'react'
-
-interface Props {
-  onSetName: (name: string) => void
-}
+import React from 'react'
 
 const NameInput = styled(TextField)`
   width: 300px;
@@ -13,20 +9,12 @@ const NameInput = styled(TextField)`
   position: absolute;
 `
 
-const Welcome: React.FC<Props> = ({onSetName}) => {
-  const onKeyUp: KeyboardEventHandler = useCallback((e) => {
-    if (e.key === 'Enter') {
-      onSetName((e.target as HTMLInputElement).value)
-      e.preventDefault()
-    }
-  }, [onSetName])
-
+const Welcome: React.FC = () => {
   return (
     <div>
       <NameInput
         variant='outlined'
         label='Welcome and enter your name'
-        onKeyUp={onKeyUp}
         autoFocus
       />
     </div>

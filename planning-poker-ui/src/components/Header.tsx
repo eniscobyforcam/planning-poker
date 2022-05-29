@@ -1,7 +1,6 @@
-import {Cable, ExitToApp, Person, Refresh} from '@mui/icons-material'
-import {AppBar, IconButton, styled, Toolbar, Typography} from '@mui/material'
-import React, {Fragment} from 'react'
-import {ReadyState} from 'react-use-websocket'
+import { Cable, ExitToApp, Person, Refresh } from '@mui/icons-material'
+import { AppBar, IconButton, styled, Toolbar, Typography } from '@mui/material'
+import React, { Fragment } from 'react'
 
 const Title = styled(Typography)`
   display: block;
@@ -17,71 +16,33 @@ const Room = styled(Typography)`
   }
 `
 
-interface Props {
-  room?: number
-  userName?: string
-  onNewRound: () => void
-  onLeaveRoom: () => void
-  onSetUserName: (name: string | undefined) => void
-  readyState: ReadyState
-}
-
-const Header: React.FC<Props> = ({
-  room,
-  userName,
-  onNewRound,
-  onLeaveRoom,
-  onSetUserName,
-  readyState
-}) => {
-  const StatusIndicator: React.FC = () => {
-    switch (readyState) {
-      case ReadyState.OPEN:
-        return <Cable color='success' />
-      case ReadyState.CONNECTING:
-        return <Cable color='inherit' />
-      default:
-        return <Cable color='error' />
-    }
-  }
-
+const Header: React.FC = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <StatusIndicator />
+        <Cable color='inherit' />
 
         <Title variant='h6' noWrap>
           Planning Poker
         </Title>
 
-        {room && (
-          <Fragment>
-            <Room variant='h6' noWrap>
-              Room: {room} ({userName})
-            </Room>
-          </Fragment>
-        )}
+        <Fragment>
+          <Room variant='h6' noWrap>
+            Room: 1 (user)
+          </Room>
+        </Fragment>
 
-        {room ? (
-          <Fragment>
-            <IconButton size='large' color='inherit' onClick={onNewRound}>
-              <Refresh />
-            </IconButton>
-            <IconButton size='large' color='inherit' onClick={onLeaveRoom}>
-              <ExitToApp />
-            </IconButton>
-            <IconButton
-              size='large'
-              color='inherit'
-              onClick={() => {
-                onSetUserName(undefined)
-                onLeaveRoom()
-              }}
-            >
-              <Person />
-            </IconButton>
-          </Fragment>
-        ) : undefined}
+        <Fragment>
+          <IconButton size='large' color='inherit'>
+            <Refresh />
+          </IconButton>
+          <IconButton size='large' color='inherit'>
+            <ExitToApp />
+          </IconButton>
+          <IconButton size='large' color='inherit'>
+            <Person />
+          </IconButton>
+        </Fragment>
       </Toolbar>
     </AppBar>
   )

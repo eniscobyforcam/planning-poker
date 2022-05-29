@@ -6,27 +6,14 @@ import {
   TableHead,
   TableRow
 } from '@mui/material'
-import {styled} from '@mui/system'
-import React, {useMemo} from 'react'
+import { styled } from '@mui/system'
+import React from 'react'
 
 const StyledTable = styled(Table)`
   margin: ${({theme}) => theme.spacing(1)};
 `
 
-interface Props {
-  votes: Record<string, string>
-}
-
-const Round: React.FC<Props> = ({votes}) => {
-  const revealed = useMemo(
-    () =>
-      Object.values(votes).reduce(
-        (total, current) => total && current !== '',
-        true
-      ),
-    [votes]
-  )
-
+const Round: React.FC = () => {
   return (
     <Container fixed>
       <StyledTable>
@@ -37,14 +24,10 @@ const Round: React.FC<Props> = ({votes}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(votes).map(([person, points]) => (
-            <TableRow key={person}>
-              <TableCell>{person}</TableCell>
-              <TableCell>
-                {revealed ? points : votes[person] === '' ? '?' : '✔️'}
-              </TableCell>
+            <TableRow>
+              <TableCell>User</TableCell>
+              <TableCell>?</TableCell>
             </TableRow>
-          ))}
         </TableBody>
       </StyledTable>
     </Container>
