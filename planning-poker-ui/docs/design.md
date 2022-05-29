@@ -189,8 +189,9 @@ In addition to the current state it now provides a set of callbacks to manipulat
 * **setName** - sets the name
 * **createRoom** - sets room to 1, creates votes map with two dummy users
 * **joinRoom**
-    * invokes showError with an error message when the user is already in the votes map
+    * invokes showError with an error message when the new room number is not equal to 1
     * sets room to the parameter of the callback
+    * includes the current user in the votes map
 * **leaveRoom** - sets room to undefined, removes user from the votes map
 * **startNewRound** - resets all votes to ''
 * **vote** - sets the vote of current user to parameter of the callback
