@@ -1,3 +1,11 @@
+# Branch overview
+
+1. **workshop-react-start** - bootstrapped project - start of the workshop
+2. **workshop-react-static** - finished step 2 of Thinking in React - Build a static version
+3. **workshop-ui-with-state** - finished step 4 of Thinking in React - Pass state down from where it lives to children
+4. **workshop-ui-inverse-data-flow** - finished step 5 of Thinking in React - Add inverse data flow (without backend integration)
+5. **workshop-ui-finished** - complete application - with backend integration
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
