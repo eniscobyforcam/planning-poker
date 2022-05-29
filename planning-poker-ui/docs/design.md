@@ -80,6 +80,7 @@ The room can be in two states:
 
 # Step 2 - Build a static version in React
 
+Build and style components, use static texts instead of dynamic data.
 
 # Step 3 - Identify the  minimal (but complete) representation of UI state
 
@@ -164,7 +165,7 @@ In this step we pass the state change callbacks down to children, which invoke t
 
 The interface of our useRoom hook will become something like:
 ```tsx
-const useRoom = (showError: (error: string) => void): {
+interface Room {
   room: number | undefined
   name: string | undefined
   readyState: ReadyState
@@ -175,7 +176,9 @@ const useRoom = (showError: (error: string) => void): {
   leaveRoom: () => void
   startNewRound: () => void
   vote: (points: string) => void
-} => {
+}
+
+const useRoom = (showError: (error: string) => void): Room => {
     // ...
 }
 ```
@@ -206,22 +209,3 @@ The integration will be implemented along these lines:
     * **Error** - calls the **showError** callback
     * **NewRoom** - updates **room number** state variable and sends a **joinRoom** message to the server
     * **Votes** - updates **room number** and votes state variables
-
-Note - we can use .env files to have the app connect to an alternative URL in the development mode:
-
-```ts
-const getEndpointUrl = () => {
-  if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_ENDPOINT_URL) {
-    return process.env.REACT_APP_ENDPOINT_URL
-  }
-
-  const protocol = window.location.protocol === 'https' ? 'wss' : 'ws'
-
-  return `${protocol}://${window.location.host}/endpoint/`
-}
-```
-
-File **.env.local**
-```
-REACT_APP_ENDPOINT_URL=http://localhost/endpoint/
-```

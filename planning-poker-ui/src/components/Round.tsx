@@ -10,7 +10,7 @@ import {styled} from '@mui/system'
 import React, {useMemo} from 'react'
 
 const StyledTable = styled(Table)`
-  margin: ${(props) => props.theme.spacing(1)};
+  margin: ${({theme}) => theme.spacing(1)};
 `
 
 interface Props {

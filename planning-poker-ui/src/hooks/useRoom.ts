@@ -2,7 +2,10 @@ import {useCallback, useEffect, useState} from 'react'
 import useWebSocket, {ReadyState} from 'react-use-websocket'
 
 const getEndpointUrl = () => {
-  if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_ENDPOINT_URL) {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.REACT_APP_ENDPOINT_URL
+  ) {
     return process.env.REACT_APP_ENDPOINT_URL
   }
 
@@ -11,7 +14,7 @@ const getEndpointUrl = () => {
   return `${protocol}://${window.location.host}/endpoint/`
 }
 
-const useRoom = (showError: (error: string) => void): {
+interface Room {
   room: number | undefined
   name: string | undefined
   readyState: ReadyState
@@ -22,52 +25,73 @@ const useRoom = (showError: (error: string) => void): {
   leaveRoom: () => void
   startNewRound: () => void
   vote: (points: string) => void
-} => {
+}
+
+const useRoom = (showError: (error: string) => void): Room => {
   const [name, setName] = useState(undefined as string | undefined)
   const [room, setRoom] = useState(undefined as number | undefined)
   const [votes, setVotes] = useState({} as Record<string, string>)
 
-  const {sendMessage, lastMessage, readyState} = useWebSocket(getEndpointUrl(),{
-    shouldReconnect: () => true
-  })
+  const {sendMessage, lastMessage, readyState} = useWebSocket(
+    getEndpointUrl(),
+    {
+      shouldReconnect: () => true
+    }
+  )
 
   const createRoom = useCallback((): void => {
-    sendMessage(JSON.stringify({
-      action: "CreateRoom"
-    }))
+    sendMessage(
+      JSON.stringify({
+        action: 'CreateRoom'
+      })
+    )
   }, [sendMessage])
 
-  const joinRoom = useCallback((no: number): void => {
-    sendMessage(JSON.stringify({
-      action: "JoinRoom",
-      room: no,
-      name
-    }))
-  }, [sendMessage, name])
+  const joinRoom = useCallback(
+    (no: number): void => {
+      sendMessage(
+        JSON.stringify({
+          action: 'JoinRoom',
+          room: no,
+          name
+        })
+      )
+    },
+    [sendMessage, name]
+  )
 
-  const vote = useCallback((points: string): void => {
-    sendMessage(JSON.stringify({
-      action: "Vote",
-      room,
-      name,
-      points
-    }))  
-  }, [sendMessage, room, name])
+  const vote = useCallback(
+    (points: string): void => {
+      sendMessage(
+        JSON.stringify({
+          action: 'Vote',
+          room,
+          name,
+          points
+        })
+      )
+    },
+    [sendMessage, room, name]
+  )
 
   const leaveRoom = useCallback((): void => {
-    sendMessage(JSON.stringify({
-      action: "LeaveRoom",
-      room,
-      name
-    }))  
+    sendMessage(
+      JSON.stringify({
+        action: 'LeaveRoom',
+        room,
+        name
+      })
+    )
     setRoom(undefined)
   }, [sendMessage, setRoom, room, name])
 
   const startNewRound = useCallback((): void => {
-    sendMessage(JSON.stringify({
-      action: "NewRound",
-      room
-    }))  
+    sendMessage(
+      JSON.stringify({
+        action: 'NewRound',
+        room
+      })
+    )
   }, [sendMessage, room])
 
   useEffect(() => {
@@ -75,14 +99,14 @@ const useRoom = (showError: (error: string) => void): {
       const msg = JSON.parse(lastMessage.data) as Record<string, any>
 
       switch (msg.result) {
-        case "Error":
+        case 'Error':
           showError(msg.error)
           break
-        case "NewRoom":
+        case 'NewRoom':
           setRoom(msg.room)
           joinRoom(msg.room)
           break
-        case "Votes":
+        case 'Votes':
           setRoom(msg.room)
           setVotes(msg.votes)
           break

@@ -27,14 +27,13 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({
-                                         room,
-                                         userName,
-                                         onNewRound,
-                                         onLeaveRoom,
-                                         onSetUserName,
-                                         readyState
-                                       }) => {
-
+  room,
+  userName,
+  onNewRound,
+  onLeaveRoom,
+  onSetUserName,
+  readyState
+}) => {
   const StatusIndicator: React.FC = () => {
     switch (readyState) {
       case ReadyState.OPEN:
@@ -55,16 +54,16 @@ const Header: React.FC<Props> = ({
           Planning Poker
         </Title>
 
-        {room
-          ? <Fragment>
+        {room && (
+          <Fragment>
             <Room variant='h6' noWrap>
               Room: {room} ({userName})
             </Room>
           </Fragment>
-          : undefined}
+        )}
 
-        {room
-          ? <Fragment>
+        {room ? (
+          <Fragment>
             <IconButton size='large' color='inherit' onClick={onNewRound}>
               <Refresh />
             </IconButton>
@@ -82,8 +81,7 @@ const Header: React.FC<Props> = ({
               <Person />
             </IconButton>
           </Fragment>
-          : undefined}
-
+        ) : undefined}
       </Toolbar>
     </AppBar>
   )
