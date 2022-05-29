@@ -20,18 +20,12 @@ const Room = styled(Typography)`
 interface Props {
   room?: number
   userName?: string
-  onNewRound: () => void
-  onLeaveRoom: () => void
-  onSetUserName: (name: string | undefined) => void
   readyState: ReadyState
 }
 
 const Header: React.FC<Props> = ({
   room,
   userName,
-  onNewRound,
-  onLeaveRoom,
-  onSetUserName,
   readyState
 }) => {
   const StatusIndicator: React.FC = () => {
@@ -62,26 +56,22 @@ const Header: React.FC<Props> = ({
           </Fragment>
         )}
 
-        {room ? (
+        {room && (
           <Fragment>
-            <IconButton size='large' color='inherit' onClick={onNewRound}>
+            <IconButton size='large' color='inherit'>
               <Refresh />
             </IconButton>
-            <IconButton size='large' color='inherit' onClick={onLeaveRoom}>
+            <IconButton size='large' color='inherit'>
               <ExitToApp />
             </IconButton>
             <IconButton
               size='large'
               color='inherit'
-              onClick={() => {
-                onSetUserName(undefined)
-                onLeaveRoom()
-              }}
             >
               <Person />
             </IconButton>
           </Fragment>
-        ) : undefined}
+        )}
       </Toolbar>
     </AppBar>
   )

@@ -3,27 +3,19 @@ import RoomSelection from './RoomSelection'
 import Welcome from './Welcome'
 
 interface Props {
-    name: string | undefined
-    room: number | undefined
-    setName: (name: string) => void
-    votes: Record<string, string>
-    joinRoom: (room: number) => void
-    createRoom: () => void
-    vote: (points: string) => void
+  name: string | undefined
+  room: number | undefined
+  votes: Record<string, string>
 }
 
-const Content: React.FC<Props> = ({name, room, votes, setName, joinRoom, createRoom, vote}) => {
+const Content: React.FC<Props> = ({name, room, votes}) => {
   return (
     <>
-      {!name && <Welcome onSetName={setName} />}
+      {!name && <Welcome />}
 
-      {name && !room && (
-        <RoomSelection onEnterRoom={joinRoom} onCreateRoom={createRoom} />
-      )}
+      {name && !room && <RoomSelection />}
 
-      {name && room && (
-        <Room name={name} votes={votes} vote={vote}/>
-      )}
+      {name && room && <Room name={name} votes={votes} />}
     </>
   )
 }

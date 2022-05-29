@@ -10,10 +10,9 @@ const Background = styled(Grid)`
 
 interface Props {
   currentVote: string
-  onVote: (vote: string) => void
 }
 
-const Cards: React.FC<Props> = ({currentVote, onVote}) => {
+const Cards: React.FC<Props> = ({currentVote}) => {
   return (
     <Background container spacing={1} justifyContent='center'>
       {["0", "0.5", "1", "2", "3", "5", "8", "13", "20", "40", "100", "?", "☕"].map((value) => (
@@ -21,7 +20,6 @@ const Cards: React.FC<Props> = ({currentVote, onVote}) => {
           key={`Card_${value}`}
           value={value}
           currentVote={currentVote}
-          onVote={onVote}
         />
       ))}
     </Background>

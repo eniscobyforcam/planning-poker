@@ -11,7 +11,6 @@ import {styled} from '@mui/system'
 interface Props {
   value: string
   currentVote: string
-  onVote: (vote: string) => void
 }
 
 const StyledCardContent = styled(CardContent)`
@@ -25,8 +24,7 @@ const StyledCard = styled(Card)`
 
 const VotingCard: React.FC<Props> = ({
   value,
-  currentVote,
-  onVote
+  currentVote
 }) => {
   const theme = useTheme()
   const background =
@@ -34,14 +32,9 @@ const VotingCard: React.FC<Props> = ({
       ? theme.palette.secondary.main
       : theme.palette.secondary.contrastText
 
-  const onClick = () => {
-    if (value === currentVote) onVote('')
-    else onVote(value)
-  }
-
   return (
     <StyledCard sx={{background}}>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea>
         <StyledCardContent>
           <Typography
             variant='h5'

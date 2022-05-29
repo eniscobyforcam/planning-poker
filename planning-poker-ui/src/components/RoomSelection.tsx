@@ -1,5 +1,5 @@
-import {Link, styled, TextField, Typography} from '@mui/material'
-import React, {KeyboardEventHandler, useCallback} from 'react'
+import { Link, styled, TextField, Typography } from '@mui/material'
+import React from 'react'
 
 const Window = styled('div')`
   top: 50%;
@@ -8,25 +8,10 @@ const Window = styled('div')`
   position: absolute;
 `
 
-interface Props {
-  onEnterRoom: (no: number) => void
-  onCreateRoom: () => void
-}
-
-const RoomSelection: React.FC<Props> = ({
-  onEnterRoom,
-  onCreateRoom
-}) => {
-  const onKeyUp: KeyboardEventHandler = useCallback((e) => {
-    if (e.key === 'Enter') {
-      onEnterRoom(parseInt((e.target as HTMLInputElement).value))
-      e.preventDefault()
-    }
-  }, [onEnterRoom])
-
+const RoomSelection: React.FC = () => {
   return (
     <Window>
-      <Link variant='h6' onClick={onCreateRoom}>
+      <Link variant='h6'>
         Create new room...
       </Link>
       <Typography variant='h6'>or</Typography>
@@ -34,7 +19,6 @@ const RoomSelection: React.FC<Props> = ({
         variant='outlined'
         label='join room'
         autoFocus
-        onKeyUp={onKeyUp}
       />
     </Window>
   )

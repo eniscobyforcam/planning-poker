@@ -12,21 +12,15 @@ const Viewport = styled('div')`
 
 const App: React.FC = () => {
   const [currentError, setCurrentError] = useState(
-    undefined as string | undefined
+    "Click me..." as string | undefined
   )
 
   const {
     room,
     votes,
     name,
-    readyState,
-    createRoom,
-    joinRoom,
-    leaveRoom,
-    setName,
-    startNewRound,
-    vote
-  } = useRoom(setCurrentError)
+    readyState
+  } = useRoom()
 
   return (
     <Viewport>
@@ -34,24 +28,16 @@ const App: React.FC = () => {
         userName={name}
         room={room}
         readyState={readyState}
-        onNewRound={startNewRound}
-        onLeaveRoom={leaveRoom}
-        onSetUserName={setName}
       />
 
       <Content
         name={name}
         room={room}
         votes={votes}
-        setName={setName}
-        joinRoom={joinRoom}
-        createRoom={createRoom}
-        vote={vote}
       />
       
       <Snackbar
         open={currentError !== undefined}
-        autoHideDuration={6000}
         onClose={() => setCurrentError(undefined)}
       >
         <Alert onClose={() => setCurrentError(undefined)} severity='error'>
