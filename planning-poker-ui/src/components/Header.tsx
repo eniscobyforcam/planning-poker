@@ -62,7 +62,7 @@ const Header: React.FC<Props> = ({
           </Fragment>
         )}
 
-        {room ? (
+        {room && (
           <Fragment>
             <IconButton size='large' color='inherit' onClick={onNewRound}>
               <Refresh />
@@ -81,7 +81,7 @@ const Header: React.FC<Props> = ({
               <Person />
             </IconButton>
           </Fragment>
-        ) : undefined}
+        )}
       </Toolbar>
     </AppBar>
   )
