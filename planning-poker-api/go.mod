@@ -1,4 +1,4 @@
-module github.com/peteral/planning-poker-api
+module github.com/eniscobyforcam/planning-poker-api
 
 go 1.18
 
