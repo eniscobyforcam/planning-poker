@@ -1,3 +1,22 @@
+# Build application
+
+## Step 1 - build the UI application
+
+```sh
+cd planning-poker-ui
+yarn
+yarn build
+```
+
+## Step 2 - build the docker image and start the container
+
+Note - the go code is compiled within an intermediate Docker container. This is the cleanest way to cross compile for Linux under Windows.
+
+```sh
+docker build -t planning-poker:latest .
+docker run -d --name planning-poker -p 80:80 planning-poker:latest
+```
+
 # System Context
 
 ![System context](drawings/system-context.png)
