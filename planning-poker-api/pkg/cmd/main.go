@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/peteral/planning-poker-api/pkg/service"
-	"github.com/peteral/planning-poker-api/pkg/transport"
+	"github.com/eniscobyforcam/planning-poker-api/pkg/service"
+	"github.com/eniscobyforcam/planning-poker-api/pkg/transport"
 )
 
 func main() {
