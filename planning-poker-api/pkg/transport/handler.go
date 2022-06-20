@@ -2,7 +2,7 @@ package transport
 
 import (
 	"encoding/json"
-	"github.com/peteral/planning-poker-api/pkg/service"
+	"github.com/eniscobyforcam/planning-poker-api/pkg/service"
 	"log"
 	"net/http"
 
