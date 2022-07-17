@@ -2,6 +2,7 @@
 import Header from './components/Header.vue'
 import Content from './components/Content.vue'
 import { useRoom } from './composables/room';
+import { ElNotification } from 'element-plus';
 
 let endpointUrl = import.meta.env.VITE_ENDPOINT_URL
 
@@ -11,7 +12,12 @@ if (!endpointUrl) {
 }
 
 const showError = (err: string) => {
-  console.log(`Error: ${err}`)
+  ElNotification({
+    title: 'Error',
+    message: err,
+    type: 'error',
+    offset: 100
+  })
 }
 
 const { name, room, votes, vote, setName, createRoom, joinRoom, leaveRoom, logout, startNewRound, status } = useRoom(endpointUrl, showError)

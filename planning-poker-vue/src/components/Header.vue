@@ -22,7 +22,7 @@ defineEmits<{
             bad: status === 'CLOSED',
         }"/>
         <span class="responsive-small-display-none">Planning poker</span>
-        <span id="room" class="responsive-small-text-align-left">Room: {{ room }} ({{ name }})</span>
+        <span id="room" v-if="name && room" class="responsive-small-text-align-left">Room: {{ room }} ({{ name }})</span>
         <RefreshRight class="icon button" @click="$emit('newRound')"/>
         <House class="icon button" @click="$emit('leaveRoom')"/>
         <User class="icon button" @click="$emit('logout')"/>
