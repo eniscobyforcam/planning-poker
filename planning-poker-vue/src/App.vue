@@ -3,7 +3,18 @@ import Header from './components/Header.vue'
 import Content from './components/Content.vue'
 import { useRoom } from './composables/room';
 
-const { name, room, votes, vote, setName, createRoom, joinRoom, leaveRoom, logout, startNewRound } = useRoom()
+let endpointUrl = import.meta.env.VITE_ENDPOINT_URL
+
+if (!endpointUrl) {
+  const protocol = window.location.protocol === 'https' ? 'wss' : 'ws'
+  endpointUrl = `${protocol}://${window.location.host}/endpoint/`
+}
+
+const showError = (err: string) => {
+  console.log(`Error: ${err}`)
+}
+
+const { name, room, votes, vote, setName, createRoom, joinRoom, leaveRoom, logout, startNewRound, status } = useRoom(endpointUrl, showError)
 </script>
 
 <template>
@@ -11,6 +22,7 @@ const { name, room, votes, vote, setName, createRoom, joinRoom, leaveRoom, logou
     <Header
       :room="room"
       :name="name"
+      :status="status"
       @leave-room="leaveRoom"
       @logout="logout"
       @new-round="startNewRound"

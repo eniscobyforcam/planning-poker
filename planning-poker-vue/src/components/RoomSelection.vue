@@ -20,7 +20,7 @@ const handleRoomInput = () => {
         <el-link id="create-new" @click="$emit('createRoom')">Create new room...</el-link>
         <span>
             or enter room number:
-            <el-input-number v-model="room" @keyup.enter="handleRoomInput" />
+            <el-input-number v-model="room" @keyup.enter="handleRoomInput" autofocus :controls="false" />
         </span>
     </div>
 </template>

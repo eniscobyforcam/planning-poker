@@ -11,6 +11,6 @@ const name=ref("")
 
 <template>
     <div id="name" class="centered">
-        <el-input placeholder="Your name" class="w-50 m-2" v-model="name" @keyup.enter="$emit('name', name)"/>
+        <el-input placeholder="Your name" class="w-50 m-2" v-model="name" @keyup.enter="$emit('name', name)" autofocus/>
     </div>
 </template>

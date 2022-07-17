@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RefreshRight, Connection, House, User } from '@element-plus/icons-vue'
+import type { WebSocketStatus } from '@vueuse/core'
 
-defineProps({
-    room: Number,
-    name: String
-})
+defineProps<{
+    room?: number,
+    name?: string,
+    status: WebSocketStatus
+}>()
 
 defineEmits<{
     (e: 'logout'): void
@@ -15,7 +17,10 @@ defineEmits<{
 
 <template>
     <div id="header">
-        <Connection class="icon" />
+        <Connection class="icon" :class="{
+            good: status === 'OPEN',
+            bad: status === 'CLOSED',
+        }"/>
         <span class="responsive-small-display-none">Planning poker</span>
         <span id="room" class="responsive-small-text-align-left">Room: {{ room }} ({{ name }})</span>
         <RefreshRight class="icon button" @click="$emit('newRound')"/>

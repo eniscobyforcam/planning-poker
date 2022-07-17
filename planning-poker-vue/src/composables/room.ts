@@ -1,71 +1,121 @@
-import { ref, type Ref } from 'vue'
+import { useWebSocket, type WebSocketStatus } from '@vueuse/core'
+import { readonly, ref, type Ref } from 'vue'
 
 interface Room {
-    room: Ref<number | undefined>
-    name: Ref<string | undefined>
-    // readyState: string
-    votes: Ref<Record<string, string>>
-    setName: (name: string) => void
-    createRoom: () => void
-    joinRoom: (no: number) => void
-    leaveRoom: () => void
-    startNewRound: () => void
-    logout: () => void
-    vote: (points: string) => void
+  room: Ref<number | undefined>
+  name: Ref<string | undefined>
+  status: Ref<WebSocketStatus>
+  votes: Ref<Record<string, string>>
+  setName: (name: string) => void
+  createRoom: () => void
+  joinRoom: (no: number) => void
+  leaveRoom: () => void
+  startNewRound: () => void
+  logout: () => void
+  vote: (points: string) => void
+}
+
+interface Message {
+  result: string
+  error?: string
+  room: number
+  votes: Record<string, string>
+}
+
+export function useRoom(url: string, showError: (err: string) => void): Room {
+  const name = ref(undefined as string | undefined)
+  const room = ref(undefined as number | undefined)
+  const votes = ref({} as Record<string, string>)
+
+  const {status, send} = useWebSocket<Message>(url, {
+    autoReconnect: true,
+    onMessage: (ws: WebSocket, event: MessageEvent) => {
+      const msg = JSON.parse(event.data) as Message
+      switch (msg.result) {
+        case 'Error':
+          if (msg.error) showError(msg.error)
+          break
+        case 'NewRoom':
+          room.value = msg.room
+          joinRoom(msg.room)
+          break
+        case 'Votes':
+          room.value = msg.room
+          votes.value = msg.votes
+          break
+      }
+    }
+  })
+
+  const vote = (points: string) => {
+    send(
+      JSON.stringify({
+        action: 'Vote',
+        room: room.value,
+        name: name.value,
+        points
+      })
+    )
   }
 
-export function useRoom() : Room {
-    const name = ref("Ladi" as string | undefined)
-    const room = ref(1 as number | undefined)
-    const votes = ref({
-        "Ladi": "8",
-        "Hans-Karl": "1"
-    } as Record<string, string>)
+  const setName = (newName: string) => {
+    name.value = newName
+  }
 
-    const vote = (points : string) => {
-        votes.value = {
-            ...votes.value,
-            [name.value!]: points
-        }
-    }
+  const createRoom = () => {
+    send(
+      JSON.stringify({
+        action: 'CreateRoom'
+      })
+    )
+  }
 
-    const setName = (newName: string) => {
-        name.value = newName
-    }
+  const joinRoom = (newRoom: number | undefined) => {
+    send(
+      JSON.stringify({
+        action: 'JoinRoom',
+        room: newRoom,
+        name: name.value
+      })
+    )
+  }
 
-    const createRoom = () => {
-        room.value = 1
-    }
+  const leaveRoom = () => {
+    send(
+      JSON.stringify({
+        action: 'LeaveRoom',
+        room: room.value,
+        name: name.value
+      })
+    )
+    room.value = undefined
+  }
 
-    const joinRoom = (newRoom: number | undefined) => {
-        room.value = newRoom
-    }
+  const logout = () => {
+    leaveRoom()
+    name.value = undefined
+  }
 
-    const logout = () => {
-        name.value = undefined
-        room.value = undefined
-    }
+  const startNewRound = () => {
+    send(
+      JSON.stringify({
+        action: 'NewRound',
+        room: room.value
+      })
+    )
+  }
 
-    const leaveRoom = () => {
-        room.value = undefined
-    }
-
-    const startNewRound = () => {
-        const newVotes={} as Record<string, string>
-        Object.entries(votes.value).forEach(([key]) => newVotes[key] = "")
-        votes.value = newVotes
-    }
-
-    return {
-        votes,
-        name,
-        room, 
-        vote,
-        setName,
-        createRoom,
-        joinRoom,
-        leaveRoom,
-        startNewRound,
-        logout
-    }
+  return {
+    votes: readonly(votes),
+    name: readonly(name),
+    room: readonly(room),
+    status: readonly(status),
+    vote,
+    setName,
+    createRoom,
+    joinRoom,
+    leaveRoom,
+    startNewRound,
+    logout
+  }
 }
