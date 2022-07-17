@@ -23,9 +23,9 @@ defineEmits<{
         }"/>
         <span class="responsive-small-display-none">Planning poker</span>
         <div id="room" class="responsive-small-text-align-left"><span v-if="name && room">Room: {{ room }} ({{ name }})</span></div>
-        <RefreshRight class="icon button" @click="$emit('newRound')"/>
-        <House class="icon button" @click="$emit('leaveRoom')"/>
-        <User class="icon button" @click="$emit('logout')"/>
+        <RefreshRight v-if="name && room" class="icon button" @click="$emit('newRound')"/>
+        <House v-if="name && room" class="icon button" @click="$emit('leaveRoom')"/>
+        <User v-if="name && room" class="icon button" @click="$emit('logout')"/>
     </div>
 </template>
 
